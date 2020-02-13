@@ -166,7 +166,7 @@ public class Model extends JSplitPane {
 			}
 
 		});
-		
+
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, 1));
 		panel.setBorder(BorderFactory.createTitledBorder("Code"));
@@ -589,7 +589,7 @@ public class Model extends JSplitPane {
 	private class Tab extends JPanel {
 		private static final long serialVersionUID = -514663009333644974L;
 		private JLabel closeButton = new JLabel(new ImageIcon(
-				Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("/resources/icon_close.png"))));
+				Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource("icon_close.png"))));
 		private JLabel tabTitle = new JLabel();
 		private String title = "";
 
@@ -655,11 +655,16 @@ public class Model extends JSplitPane {
 
 	@SuppressWarnings("unchecked")
 	public DefaultMutableTreeNode getChild(DefaultMutableTreeNode node, TreeNodeUserObject name) {
-		Enumeration<DefaultMutableTreeNode> entry = node.children();
+		Enumeration<TreeNode> entry = node.children();
 		while (entry.hasMoreElements()) {
-			DefaultMutableTreeNode nods = entry.nextElement();
-			if (((TreeNodeUserObject) nods.getUserObject()).getOriginalName().equals(name.getOriginalName())) {
-				return nods;
+			TreeNode nods = entry.nextElement();
+			if (nods instanceof DefaultMutableTreeNode)
+			{
+				final DefaultMutableTreeNode dNode = (DefaultMutableTreeNode) nods;
+				if (((TreeNodeUserObject) dNode.getUserObject()).getOriginalName().equals(name.getOriginalName()))
+				{
+					return dNode;
+				}
 			}
 		}
 		return null;

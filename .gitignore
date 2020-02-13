@@ -5,3 +5,10 @@
 /target
 /lib
 /resources
+*.iws
+out/
+.idea_modules/
+.idea/
+*.iml
+modules.xml
+*.ipr
